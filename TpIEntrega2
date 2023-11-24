@@ -1,0 +1,8 @@
+directorio raíz del TP:
+
+Este trabajo contiene entidades gestionadas con hibernate. 
+Una variable de patrón State.
+Un dao para acceder a métodos de las clases y actualizar los valores.
+El Main hace la carga de datos manual para que persistan en la BD.
+MainRepo actúa sobre la variable state la modifica y su método imprime los estados.
+MainRepo2 utiliza otros métodos para calcular técnico con más incidentes, incidentes por técnico y modificar su contacto.

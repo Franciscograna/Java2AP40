@@ -61,25 +61,25 @@ public class IncidenteDaoImpl implements IncidenteDao {
 	
 	
 	@Override
-	public Tecnico obtenerTrabajadorConMasIncidentes() {
-		//em.getTransaction().begin();
+	public Tecnico obtenerTrabajadorConMasIncidentes() {
 	    String jpql = "SELECT i.tecnico, COUNT(i) FROM Incidente i GROUP BY i.tecnico ORDER BY COUNT(i) DESC";
 	    Query query = em.createQuery(jpql, Object[].class);
 	    query.setMaxResults(1); 
-	    
+//obtener los técnicos con el máximo valor de incidentes
 	    List<Object[]> resultados = query.getResultList();
-
+//guardarlos en lista
 	    if (!resultados.isEmpty()) {
-	    	
-	        Long maxIncidentes = (Long) resultados.get(0)[1];
+//manejo excepcion
+	        Long maxIncidentes = (Long) resultados.get(0)[1]
+//guardar el valor máximo
 	        int i =0;
 	        List<Tecnico> trabajadoresConMaxIncidentes = new ArrayList<>();
 	        for (Object[] resultado : resultados) {
 	            Long incidentes = (Long) resultado[1];
 	            if (incidentes.equals(maxIncidentes)) {
-	            	
 	                trabajadoresConMaxIncidentes.add((Tecnico) resultado[0]);
-	                
+	 
+//guardo los técnicos con más incidentes en una lista             
 	                i++;
 	            } else {
 	                break; 
@@ -96,7 +96,7 @@ public class IncidenteDaoImpl implements IncidenteDao {
 
 	
 	public List<Incidente> obtenerIncidentesPorTecnico(Tecnico tecnico) {
-		//em.getTransaction().begin();
+		
 	    String jpql = "SELECT i FROM Incidente i WHERE i.tecnico = :tecnico";
 	    Query query = em.createQuery(jpql, Incidente.class);
 	    query.setParameter("tecnico", tecnico);
@@ -106,44 +106,6 @@ public class IncidenteDaoImpl implements IncidenteDao {
 
 	
 	
-	/*
-	@Override
-	public Tecnico obtenerTrabajadorConMasIncidentes() {
-	    String jpql = "SELECT i.tecnico, COUNT(i), SUM(i.tiempoTrascurrido) FROM Incidente i GROUP BY i.tecnico ORDER BY COUNT(i) DESC";
-	    Query query = em.createQuery(jpql, Object[].class);
-	    query.setMaxResults(1);
-
-	    List<Object[]> resultados = query.getResultList();
-
-	    if (!resultados.isEmpty()) {
-
-	        Long maxIncidentes = (Long) resultados.get(0)[1];
-	        double menorPromedio = Double.MAX_VALUE;
-	        List<Tecnico> trabajadoresConMenorPromedio = new ArrayList<>();
-
-	        for (Object[] resultado : resultados) {
-	            Long incidentes = (Long) resultado[1];
-	            double tiempoTrascurrido = (Double) resultado[2];
-	            double promedio = tiempoTrascurrido / incidentes;
-
-	            if (incidentes.equals(maxIncidentes) && (promedio < menorPromedio)) {
-	              //  trabajadoresConMenorPromedio.clear();
-	                trabajadoresConMenorPromedio.add((Tecnico) resultado[0]);
-	                menorPromedio = promedio;
-	            } else if (incidentes.equals(maxIncidentes) && promedio == menorPromedio) {
-	                trabajadoresConMenorPromedio.add((Tecnico) resultado[0]);
-	            } else {
-	                break;
-	            }
-	        }
-
-	        return trabajadoresConMenorPromedio.get(0);
-	    }
-
-	    return null;
-	}
-	
-	*/
 	
 	
 
